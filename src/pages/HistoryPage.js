@@ -1,10 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AccidentHistory from '../components/AccidentHistory';
+import axios from 'axios';
 
 function HistoryPage() {
-  const [accidents, setAccidents] = useState([
-    { id: 1, date: '2024-05-01', description: 'Incendio simulado' },
-  ]);
+  const [accidents, setAccidents] = useState([]);
+
+  useEffect(() => {
+    fetchAccidents();
+  }, []);
+
+  const fetchAccidents = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/emergencies');
+      setAccidents(response.data);
+    } catch (error) {
+      console.error('Error fetching emergencies:', error);
+    }
+  };
 
   return (
     <div>

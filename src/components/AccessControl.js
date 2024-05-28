@@ -7,14 +7,14 @@ function AccessControl({ users, toggleAccess }) {
       <ul>
         {users.map(user => (
           <li key={user.id} className="flex justify-between items-center mb-4">
-            {user.name}
+            {user.rfid}
             <button
               className={`px-4 py-2 rounded ${
-                user.hasAccess ? 'bg-red-500 text-white' : 'bg-green-500 text-white'
+                user.access ? 'bg-red-500 text-white' : 'bg-green-500 text-white'
               }`}
               onClick={() => toggleAccess(user.id)}
             >
-              {user.hasAccess ? 'Revocar Acceso' : 'Dar Acceso'}
+              {user.access ? 'Revocar Acceso' : 'Dar Acceso'}
             </button>
           </li>
         ))}

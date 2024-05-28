@@ -1,15 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import UserList from '../components/UserList';
 import AccessControl from '../components/AccessControl';
+import axios from 'axios';
 
 function AccessPage() {
-  const [users, setUsers] = useState([
-    { id: 1, name: 'Usuario 1', hasAccess: true },
-    { id: 2, name: 'Usuario 2', hasAccess: false },
-  ]);
+  const [users, setUsers] = useState([]);
 
-  const toggleAccess = (id) => {
-    setUsers(users.map(user => user.id === id ? { ...user, hasAccess: !user.hasAccess } : user));
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const fetchUsers = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/users');
+      setUsers(response.data);
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    }
+  };
+
+  const toggleAccess = async (id) => {
+    try {
+      const user = users.find(user => user.id === id);
+      const updatedUser = { ...user, access: !user.access };
+      await axios.put(`http://localhost:3000/users/${id}`, { access: updatedUser.access });
+      setUsers(users.map(user => user.id === id ? updatedUser : user));
+    } catch (error) {
+      console.error('Error updating user access:', error);
+    }
   };
 
   return (
