@@ -1,8 +1,8 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import AccessPage from './pages/AccessPage';
-import HistoryPage from './pages/HistoryPage';
+import DoorControlPage from './pages/DoorControlPage';
+import EmergencyHistoryPage from './pages/EmergencyHistoryPage';
 
 function App() {
   return (
@@ -10,8 +10,8 @@ function App() {
       <Navbar />
       <div className="p-6 container mx-auto">
         <Routes>
-          <Route path="/" element={<AccessPage />} />
-          <Route path="/history" element={<HistoryPage />} />
+          <Route path="/" element={<DoorControlPage />} />
+          <Route path="/history" element={<EmergencyHistoryPage />} />
         </Routes>
       </div>
     </div>
